@@ -18,7 +18,6 @@ class TasksRepository{
     final Response response = await _apiProvider.request(uri: url);
     final bodyUtf8 = utf8.decode(response.bodyBytes);
 
-
   }
 
 
