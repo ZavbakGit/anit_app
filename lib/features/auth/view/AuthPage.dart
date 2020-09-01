@@ -2,11 +2,16 @@ import 'package:anit_app/features/auth/bloc/auth_bloc.dart';
 import 'package:anit_app/features/auth/bloc/auth_event.dart';
 import 'package:anit_app/features/auth/bloc/auth_state.dart';
 import 'package:anit_app/model/login_data.dart';
+import 'package:anit_app/model/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthPage extends StatelessWidget {
+  final Function(User, LoginData) successListener;
+
+  const AuthPage({Key key, this.successListener}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +53,12 @@ class AuthPage extends StatelessWidget {
                       });
                 }
 
-                return Text('Unknown state');
+                if (state is AuthSuccessState) {
+                  successListener(state.user, state.loginData);
+                  return Text('');
+                }
+
+                return Text('Unknown state: ${state.toString()}');
               },
             ),
           ),

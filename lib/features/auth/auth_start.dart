@@ -8,8 +8,7 @@ import 'bloc/auth_bloc.dart';
 import 'bloc/auth_state.dart';
 
 class AuthStartFeature extends StatelessWidget {
-
-  final Function(User,LoginData) successListener;
+  final Function(User, LoginData) successListener;
 
   const AuthStartFeature({Key key, this.successListener}) : super(key: key);
 
@@ -17,13 +16,8 @@ class AuthStartFeature extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthBloc(),
-      child: BlocListener<AuthBloc, AuthState>(
-        listener: (context, state){
-          if (state is AuthSuccessState){
-            successListener(state.user, state.loginData);
-          }
-        },
-        child: AuthPage(),
+      child: AuthPage(
+        successListener: successListener,
       ),
     );
   }
