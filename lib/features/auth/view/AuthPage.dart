@@ -1,3 +1,4 @@
+import 'package:anit_app/common/view/progress_widget.dart';
 import 'package:anit_app/features/auth/bloc/auth_bloc.dart';
 import 'package:anit_app/features/auth/bloc/auth_event.dart';
 import 'package:anit_app/features/auth/bloc/auth_state.dart';
@@ -124,9 +125,4 @@ Widget _getFormAuth(
   );
 }
 
-class ProgressWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return CircularProgressIndicator();
-  }
-}
+

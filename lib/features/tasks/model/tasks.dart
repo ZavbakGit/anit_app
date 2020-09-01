@@ -1,3 +1,27 @@
+class ResponseTasks {
+  List<TaskItem> tasks;
+
+  ResponseTasks({this.tasks});
+
+  ResponseTasks.fromJson(Map<String, dynamic> json) {
+    if (json['tasks'] != null) {
+      tasks = new List<TaskItem>();
+      json['tasks'].forEach((v) {
+        tasks.add(new TaskItem.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.tasks != null) {
+      data['tasks'] = this.tasks.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+
 class TaskItem {
   String guid;
   String number;
