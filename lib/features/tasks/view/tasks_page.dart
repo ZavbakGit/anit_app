@@ -1,4 +1,5 @@
 import 'package:anit_app/common/util/date_utils.dart';
+import 'package:anit_app/common/view/choose_radio_button_dialog.dart';
 import 'package:anit_app/common/view/progress_widget.dart';
 import 'package:anit_app/features/tasks/bloc/tasks_bloc.dart';
 import 'package:anit_app/features/tasks/bloc/tasks_event.dart';
@@ -13,77 +14,19 @@ enum SingingCharacter { lafayette, jefferson }
 class TasksPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    void _showSimpleDialog() {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return SimpleDialog(title: Text('Группа'), children: <Widget>[
-              RadioListTile(
-                title: Text('Долги'),
-                value: 1,
-                onChanged: (value) {
-                  Navigator.pop(context, value);
-                },
-              ),
-              RadioListTile(
-                title: Text('Поручение'),
-                value: 2,
-                onChanged: (value) {
-                  Navigator.pop(context, value);
-                },
-              )
-            ]);
-          });
-    }
-
-    void _showSimpleDialog1() {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text('Группа'),
-              content: Container(
-                child: Column(children: <Widget>[
-                  RadioListTile(
-                    title: Text('Долги'),
-                    value: 1,
-                    onChanged: (value) {
-                      //Navigator.pop(context, value);
-                    },
-                  ),
-                  RadioListTile(
-                    title: Text('Поручение'),
-                    value: 2,
-                    onChanged: (value) {
-                      //Navigator.pop(context, value);
-                    },
-                  )
-                ]),
-              ),
-              actions: <Widget>[
-                FlatButton(
-                  child: const Text('CANCEL'),
-                  onPressed: () {
-                    //Navigator.of(context).pop(ConfirmAction.CANCEL);
-                  },
-                ),
-                FlatButton(
-                  child: const Text('ACCEPT'),
-                  onPressed: () {
-                    //Navigator.of(context).pop(ConfirmAction.ACCEPT);
-                  },
-                )
-              ],
-            );
-          });
-    }
-
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          //Navigator.pushNamed(context, '/task', arguments: null);
-
-          _showSimpleDialog1();
+        onPressed: () async {
+          final value = await showDialog(
+              context: context,
+              builder: (context) => ChooseRadioButtonDialog(
+                    list: List<String>.generate(5, (index) => 'Выбери $index'),
+                    currentValue: 3,
+                  ));
+          if (value != null) {
+            //ToDo Надо ставить группу
+            Navigator.pushNamed(context, '/task');
+          }
         },
         child: Icon(
           Icons.add,
