@@ -1,3 +1,4 @@
+import 'package:anit_app/common/util/date_utils.dart';
 import 'package:anit_app/common/view/progress_widget.dart';
 import 'package:anit_app/features/tasks/bloc/tasks_bloc.dart';
 import 'package:anit_app/features/tasks/bloc/tasks_event.dart';
@@ -6,15 +7,83 @@ import 'package:anit_app/features/tasks/model/tasks.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:anit_app/common/util/date_utils.dart';
+
+enum SingingCharacter { lafayette, jefferson }
 
 class TasksPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    void _showSimpleDialog() {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return SimpleDialog(title: Text('Группа'), children: <Widget>[
+              RadioListTile(
+                title: Text('Долги'),
+                value: 1,
+                onChanged: (value) {
+                  Navigator.pop(context, value);
+                },
+              ),
+              RadioListTile(
+                title: Text('Поручение'),
+                value: 2,
+                onChanged: (value) {
+                  Navigator.pop(context, value);
+                },
+              )
+            ]);
+          });
+    }
+
+    void _showSimpleDialog1() {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Группа'),
+              content: Container(
+                child: Column(children: <Widget>[
+                  RadioListTile(
+                    title: Text('Долги'),
+                    value: 1,
+                    onChanged: (value) {
+                      //Navigator.pop(context, value);
+                    },
+                  ),
+                  RadioListTile(
+                    title: Text('Поручение'),
+                    value: 2,
+                    onChanged: (value) {
+                      //Navigator.pop(context, value);
+                    },
+                  )
+                ]),
+              ),
+              actions: <Widget>[
+                FlatButton(
+                  child: const Text('CANCEL'),
+                  onPressed: () {
+                    //Navigator.of(context).pop(ConfirmAction.CANCEL);
+                  },
+                ),
+                FlatButton(
+                  child: const Text('ACCEPT'),
+                  onPressed: () {
+                    //Navigator.of(context).pop(ConfirmAction.ACCEPT);
+                  },
+                )
+              ],
+            );
+          });
+    }
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/task', arguments: null);
+          //Navigator.pushNamed(context, '/task', arguments: null);
+
+          _showSimpleDialog1();
         },
         child: Icon(
           Icons.add,
