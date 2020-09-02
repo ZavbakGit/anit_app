@@ -22,7 +22,9 @@ class TaskPage extends StatelessWidget {
             }
 
             if (state is ProgressState) {
-              return ProgressWidget();
+              return Center(
+                child: ProgressWidget(),
+              );
             }
 
             if (state is ErrorState) {
@@ -44,26 +46,21 @@ class TaskPage extends StatelessWidget {
 }
 
 Widget _showTaskForm(Task task) {
-
   final _partner = TextEditingController();
-  _partner.text = task.partner.name;
-
+  _partner.text = task.partner?.name??'';
 
   final _director = TextEditingController();
-  _director.text = task.director.name;
+  _director.text = task.director?.name??'';
 
   final _responsible = TextEditingController();
-  _responsible.text = task.responsible.name;
+  _responsible.text = task.responsible?.name??'';
 
   final _description = TextEditingController();
-  _description.text = task.description;
-
-
-
+  _description.text = task.description??'';
 
   return SingleChildScrollView(
     child: Container(
-      padding: EdgeInsets.symmetric(vertical: 24.0,horizontal: 8.0),
+      padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 8.0),
       child: Column(
         children: <Widget>[
           Row(
@@ -74,7 +71,7 @@ Widget _showTaskForm(Task task) {
               ),
               Expanded(
                 flex: 1,
-                child: Text('${task.number}'),
+                child: Text('${task.number??''}'),
               ),
             ],
           ),
@@ -119,7 +116,6 @@ Widget _showTaskForm(Task task) {
               hintText: 'Постановщик',
             ),
           ),
-
         ],
       ),
     ),

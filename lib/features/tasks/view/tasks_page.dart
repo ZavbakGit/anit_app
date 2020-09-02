@@ -12,6 +12,14 @@ class TasksPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/task', arguments: null);
+        },
+        child: Icon(
+          Icons.add,
+        ),
+      ),
       body: RefreshIndicator(
         semanticsLabel: 'Обновить',
         onRefresh: () async {
@@ -34,7 +42,12 @@ class TasksPage extends StatelessWidget {
 
                 if (state is ErrorState) {
                   return ListView(
-                    children: <Widget>[Text('Error: ${state.errorMessage}')],
+                    children: <Widget>[
+                      Text(''),
+                      Text('Error: ${state.errorMessage}'),
+                      Text(''),
+                      Text(''),
+                    ],
                   );
                 }
 
@@ -56,9 +69,8 @@ Widget _listTaskItem(List<TaskItem> list) {
   return ListView.builder(
     itemCount: list.length,
     itemBuilder: (context, index) => GestureDetector(
-      onTap: (){
-        Navigator.pushNamed(context, '/task',
-            arguments: list[index].guid);
+      onTap: () {
+        Navigator.pushNamed(context, '/task', arguments: list[index].guid);
       },
       child: Card(
         child: ListTile(
@@ -80,7 +92,10 @@ Widget _listTaskItem(List<TaskItem> list) {
               ),
               Container(
                 padding: EdgeInsets.symmetric(vertical: 4.0),
-                child: Text('${list[index].responsible}',style: TextStyle(color: Theme.of(context).accentColor),),
+                child: Text(
+                  '${list[index].responsible}',
+                  style: TextStyle(color: Theme.of(context).accentColor),
+                ),
               )
             ],
           ),
