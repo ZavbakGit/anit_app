@@ -2,24 +2,24 @@
 import 'package:anit_app/features/tasks/model/tasks.dart';
 import 'package:equatable/equatable.dart';
 
-abstract class TaskState extends Equatable {
-  const TaskState();
+abstract class TasksState extends Equatable {
+  const TasksState();
 
   @override
   List<Object> get props => [];
 }
 
-class InitialState extends TaskState {
+class InitialState extends TasksState {
   @override
   List<Object> get props => [];
 }
 
-class ProgressState extends TaskState {
+class ProgressState extends TasksState {
   @override
   List<Object> get props => [];
 }
 
-class ShowListState extends TaskState {
+class ShowListState extends TasksState {
   final List<TaskItem> listItem;
 
   ShowListState(this.listItem);
@@ -28,7 +28,7 @@ class ShowListState extends TaskState {
   List<Object> get props => [listItem];
 }
 
-class ErrorState extends TaskState {
+class ErrorState extends TasksState {
   final String errorMessage;
 
   ErrorState(this.errorMessage);

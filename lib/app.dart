@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'features/auth/auth_start.dart';
+import 'features/task/task_start.dart';
 import 'features/tasks/tasks_start.dart';
 import 'model/AppModel.dart';
 import 'model/user.dart';
@@ -23,7 +24,8 @@ class App extends StatelessWidget {
                 });
               },
             ),
-        '/tasks': (context) => TaskStartFeature()
+        '/tasks': (context) => TasksStartFeature(),
+        '/task': (context) => TaskStartFeature()
       },
       initialRoute: '/',
     );

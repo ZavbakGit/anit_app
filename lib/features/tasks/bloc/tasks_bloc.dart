@@ -1,22 +1,21 @@
-import 'package:anit_app/features/tasks/bloc/task_event.dart';
-import 'package:anit_app/features/tasks/bloc/task_state.dart';
+import 'package:anit_app/features/tasks/bloc/tasks_event.dart';
+import 'package:anit_app/features/tasks/bloc/tasks_state.dart';
 import 'package:anit_app/features/tasks/repository/tasks_repository.dart';
 import 'package:anit_app/model/AppModel.dart';
 import 'package:anit_app/model/user.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TaskBloc extends Bloc<TaskEvent, TaskState> {
+class TasksBloc extends Bloc<TasksEvent, TasksState> {
   final TasksRepository _repository;
   final User _user;
 
-  TaskBloc(AppModel appModel)
+  TasksBloc(AppModel appModel)
       : this._repository = TasksRepository(appModel.loginData),
         this._user = appModel.user,
         super(InitialState());
 
-
   @override
-  Stream<TaskState> mapEventToState(TaskEvent event) async* {
+  Stream<TasksState> mapEventToState(TasksEvent event) async* {
     if (event is InitialEvent) {
       try {
         yield ProgressState();
