@@ -7,9 +7,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
   final TaskRepository _repository;
-  final String _guid;
+  String _guid;
 
   Task task;
+
+  TaskBloc.newTask(AppModel appModel, this.task)
+      : this._repository = TaskRepository(appModel.loginData),
+        super(InitialState());
 
   TaskBloc(AppModel appModel, this._guid)
       : this._repository = TaskRepository(appModel.loginData),
@@ -20,12 +24,9 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     if (event is InitialEvent) {
       try {
         yield ProgressState();
-        if (_guid == null) {
-          task = Task()..date = DateTime.now();
-        } else {
+        if (task == null) {
           task = await _repository.getTask(_guid);
         }
-
         yield ShowTaskState(task);
       } catch (e) {
         yield ErrorState('Error: ${e.toString()}');

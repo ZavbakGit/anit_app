@@ -18,7 +18,7 @@ class TasksPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appModel = Provider.of<AppModel>(context);
-    final List<Catalog> listGroup = appModel?.userSetting?.listGroupTask??[];
+    final List<Catalog> listGroup = appModel?.userSetting?.listGroupTask ?? [];
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -26,12 +26,13 @@ class TasksPage extends StatelessWidget {
           final value = await showDialog(
               context: context,
               builder: (context) => ChooseRadioButtonDialog(
-                    list: List<String>.generate(listGroup.length, (index) => listGroup[index].name),
-                    currentValue:0,
+                    list: List<String>.generate(
+                        listGroup.length, (index) => listGroup[index].name),
+                    currentValue: 0,
                   ));
           if (value != null) {
             //ToDo Надо ставить группу
-            Navigator.pushNamed(context, '/task');
+            Navigator.pushNamed(context, '/task', arguments: listGroup[value]);
           }
         },
         child: Icon(
