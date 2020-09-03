@@ -5,23 +5,29 @@ import 'package:anit_app/features/tasks/bloc/tasks_bloc.dart';
 import 'package:anit_app/features/tasks/bloc/tasks_event.dart';
 import 'package:anit_app/features/tasks/bloc/tasks_state.dart';
 import 'package:anit_app/features/tasks/model/tasks.dart';
+import 'package:anit_app/model/AppModel.dart';
+import 'package:anit_app/model/Catalog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 enum SingingCharacter { lafayette, jefferson }
 
 class TasksPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final appModel = Provider.of<AppModel>(context);
+    final List<Catalog> listGroup = appModel?.userSetting?.listGroupTask??[];
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           final value = await showDialog(
               context: context,
               builder: (context) => ChooseRadioButtonDialog(
-                    list: List<String>.generate(5, (index) => 'Выбери $index'),
-                    currentValue: 3,
+                    list: List<String>.generate(listGroup.length, (index) => listGroup[index].name),
+                    currentValue:0,
                   ));
           if (value != null) {
             //ToDo Надо ставить группу

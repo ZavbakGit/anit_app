@@ -1,5 +1,6 @@
 import 'package:anit_app/model/login_data.dart';
 import 'package:anit_app/model/user.dart';
+import 'package:anit_app/model/user_setting.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -33,12 +34,13 @@ class ShowLoginDataState extends AuthState {
 
 class AuthSuccessState extends AuthState {
   final User user;
+  final UserSetting userSetting;
   final LoginData loginData;
 
-  AuthSuccessState({@required this.user,@required this.loginData});
+  AuthSuccessState({@required this.user,@required this.loginData,@required this.userSetting});
 
   @override
-  List<Object> get props => [user,loginData];
+  List<Object> get props => [user,loginData,userSetting];
 }
 
 

@@ -5,7 +5,6 @@ import 'auth_event.dart';
 import 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-
   final _repository = AuthRepository();
 
   AuthBloc() : super(InitialState());
@@ -24,10 +23,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         //await Future.delayed(Duration(milliseconds: 3000));
 
         final user = await _repository.auth(loginData: event.loginData);
+        final userSetting = await _repository.getSetting(
+            userGuid: user.guid, loginData: event.loginData);
 
         yield AuthSuccessState(
-            loginData: event.loginData,
-            user: user
+          loginData: event.loginData,
+          userSetting: userSetting,
+          user: user,
         );
       } catch (e) {
         yield ShowLoginDataState(
@@ -37,5 +39,4 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       throw Exception('Unknown event');
     }
   }
-
 }

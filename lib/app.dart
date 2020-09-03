@@ -8,6 +8,7 @@ import 'features/task/task_start.dart';
 import 'features/tasks/tasks_start.dart';
 import 'model/AppModel.dart';
 import 'model/user.dart';
+import 'model/user_setting.dart';
 
 class App extends StatelessWidget {
   @override
@@ -16,9 +17,10 @@ class App extends StatelessWidget {
     return MaterialApp(
       routes: {
         '/': (context) => AuthStartFeature(
-              successListener: (User user, LoginData loginData) {
+              successListener: (User user, LoginData loginData,UserSetting userSetting) {
                 Future.delayed(Duration.zero, () {
                   appModel.loginData = loginData;
+                  appModel.userSetting = userSetting;
                   appModel.user = user;
                   Navigator.pushReplacementNamed(context, '/tasks');
                 });

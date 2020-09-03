@@ -4,12 +4,13 @@ import 'package:anit_app/features/auth/bloc/auth_event.dart';
 import 'package:anit_app/features/auth/bloc/auth_state.dart';
 import 'package:anit_app/model/login_data.dart';
 import 'package:anit_app/model/user.dart';
+import 'package:anit_app/model/user_setting.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthPage extends StatelessWidget {
-  final Function(User, LoginData) successListener;
+  final Function(User, LoginData,UserSetting) successListener;
 
   const AuthPage({Key key, this.successListener}) : super(key: key);
 
@@ -55,7 +56,7 @@ class AuthPage extends StatelessWidget {
                 }
 
                 if (state is AuthSuccessState) {
-                  successListener(state.user, state.loginData);
+                  successListener(state.user, state.loginData,state.userSetting);
                   return Text('');
                 }
 

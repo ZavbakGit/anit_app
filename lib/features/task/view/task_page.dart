@@ -55,8 +55,13 @@ Widget _showTaskForm(Task task) {
   final _responsible = TextEditingController();
   _responsible.text = task.responsible?.name??'';
 
+  final _groupTask = TextEditingController();
+  _groupTask.text = task.groupTask?.name??'';
+
   final _description = TextEditingController();
   _description.text = task.description??'';
+
+
 
   return SingleChildScrollView(
     child: Container(
@@ -114,6 +119,15 @@ Widget _showTaskForm(Task task) {
               suffixIcon: Icon(Icons.keyboard_arrow_right),
               labelText: 'Постановщик',
               hintText: 'Постановщик',
+            ),
+          ),
+          TextField(
+            enabled: false,
+            controller: _groupTask,
+            decoration: InputDecoration(
+              suffixIcon: Icon(Icons.keyboard_arrow_right),
+              labelText: 'Группа',
+              hintText: 'Группа',
             ),
           ),
         ],
