@@ -47,21 +47,19 @@ class TaskPage extends StatelessWidget {
 
 Widget _showTaskForm(Task task) {
   final _partner = TextEditingController();
-  _partner.text = task.partner?.name??'';
+  _partner.text = task.partner?.name ?? '';
 
   final _director = TextEditingController();
-  _director.text = task.director?.name??'';
+  _director.text = task.director?.name ?? '';
 
   final _responsible = TextEditingController();
-  _responsible.text = task.responsible?.name??'';
+  _responsible.text = task.responsible?.name ?? '';
 
   final _groupTask = TextEditingController();
-  _groupTask.text = task.groupTask?.name??'';
+  _groupTask.text = task.groupTask?.name ?? '';
 
   final _description = TextEditingController();
-  _description.text = task.description??'';
-
-
+  _description.text = task.description ?? '';
 
   return SingleChildScrollView(
     child: Container(
@@ -76,7 +74,7 @@ Widget _showTaskForm(Task task) {
               ),
               Expanded(
                 flex: 1,
-                child: Text('${task.number??''}'),
+                child: Text('${task.number ?? ''}'),
               ),
             ],
           ),
@@ -93,6 +91,12 @@ Widget _showTaskForm(Task task) {
               labelText: 'Описание',
               hintText: 'Описание',
             ),
+          ),
+          CatalogField(
+            text: task.partner?.name ?? '',
+            hintText: 'Клиент',
+            labelText: 'Клиент',
+            typeCatalog: task.partner?.type ?? '',
           ),
           TextField(
             enabled: false,
@@ -134,4 +138,40 @@ Widget _showTaskForm(Task task) {
       ),
     ),
   );
+}
+
+class CatalogField extends StatelessWidget {
+  final String labelText;
+  final String hintText;
+  final String text;
+  final String typeCatalog;
+
+  final TextEditingController controller;
+
+  CatalogField(
+      {Key key, this.labelText, this.hintText, this.text, this.typeCatalog})
+      : this.controller = TextEditingController(),
+        super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    controller.text = text;
+
+    return InkWell(
+      onTap: () async {
+        final result = await Navigator.pushNamed(context, '/search_catalog',
+            arguments: typeCatalog);
+      },
+      child: TextField(
+        autofocus: true,
+        enabled: false,
+        controller: controller,
+        decoration: InputDecoration(
+          suffixIcon: Icon(Icons.keyboard_arrow_right),
+          labelText: labelText,
+          hintText: hintText,
+        ),
+      ),
+    );
+  }
 }

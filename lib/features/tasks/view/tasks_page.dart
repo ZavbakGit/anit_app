@@ -12,8 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-enum SingingCharacter { lafayette, jefferson }
-
 class TasksPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -31,7 +29,6 @@ class TasksPage extends StatelessWidget {
                     currentValue: 0,
                   ));
           if (value != null) {
-            //ToDo Надо ставить группу
             Navigator.pushNamed(context, '/task', arguments: listGroup[value]);
           }
         },
