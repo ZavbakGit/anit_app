@@ -1,15 +1,11 @@
-import 'package:equatable/equatable.dart';
+import 'package:anit_app/common/bloc/base_event.dart';
 
-abstract class SearchCatalogEvent extends Equatable {
-  const SearchCatalogEvent();
-  @override
-  List<Object> get props => [];
-}
+class ChangedTextEvent extends BaseEvent {
+  final String text;
 
-class InitialEvent extends SearchCatalogEvent {
-  const InitialEvent();
+  ChangedTextEvent({this.text});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [text];
 }
 
