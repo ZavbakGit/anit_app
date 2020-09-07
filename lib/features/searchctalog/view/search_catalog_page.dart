@@ -1,3 +1,4 @@
+import 'package:anit_app/common/bloc/base_event.dart';
 import 'package:anit_app/common/bloc/base_state.dart';
 import 'package:anit_app/common/view/progress_widget.dart';
 import 'package:anit_app/features/searchctalog/bloc/search_catalog_bloc.dart';
@@ -19,12 +20,11 @@ class SearchCatalogPage extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 8.0),
         margin: EdgeInsets.symmetric(vertical: 24.0, horizontal: 8.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             SearchField(),
-            InformationText(),
-            Expanded(
-              child: DataContainer(),
-            )
+            //InformationText(),
+            Expanded(child: DataContainer()),
           ],
         ),
       ),
@@ -34,23 +34,43 @@ class SearchCatalogPage extends StatelessWidget {
 
 class DataContainer extends StatelessWidget {
   Widget build(BuildContext context) {
-    return BlocBuilder<SearchCatalogBloc, BaseState>(builder: (context, state) {
-      if (state is ScreenState) {
-        if (state.showProgress) {
-          return ProgressWidget();
-        } else if (state.showResult) {
-          return _list(state.resultSearch.elements);
-        } else {
-          return Text('');
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+      //height: 300,
+      //color: Colors.blue,
+      child:
+          BlocBuilder<SearchCatalogBloc, BaseState>(builder: (context, state) {
+        switch (state.runtimeType) {
+          case LoadedState:
+            final casted = state as LoadedState;
+            return _loadedData(casted.resultSearch.elements,
+                'всего: ${casted.resultSearch.size}');
+            break;
+          case ShowProgressState:
+            return Center(child: ProgressWidget());
+            break;
+          // case LoadingErrorState:
+          //   final casted = state as LoadingErrorState;
+          //   return Center(child: Text(casted.message));
+          //   break;
+          // case WaitInputState:
+          //   final casted = state as WaitInputState;
+          //   return Text('Введите не менее 3- букв');
+          //   break;
+          // case InitialState:
+          //   BlocProvider.of<SearchCatalogBloc>(context).add(InitialEvent());
+          //   return Text('');
+          //   break;
+          default:
+            return Center(child: ProgressWidget());
+            //return Center(child: Text('Error State'));
         }
-      } else {
-        return Text('');
-      }
-    });
+      }),
+    );
   }
 }
 
-Widget _list(List<Catalog> list) {
+Widget _loadedData(List<Catalog> list, String message) {
   return ListView.builder(
     itemCount: list.length,
     itemBuilder: (context, index) => GestureDetector(
@@ -65,19 +85,6 @@ Widget _list(List<Catalog> list) {
       ),
     ),
   );
-}
-
-class InformationText extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<SearchCatalogBloc, BaseState>(builder: (context, state) {
-      if (state is ScreenState) {
-        return Text(state.message);
-      } else {
-        return Text('');
-      }
-    });
-  }
 }
 
 class SearchField extends StatefulWidget {

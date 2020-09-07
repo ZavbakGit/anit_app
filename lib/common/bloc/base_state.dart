@@ -12,10 +12,10 @@ class InitialState extends BaseState {
   List<Object> get props => [];
 }
 
-class ProgressState extends BaseState {
+class ShowProgressState extends BaseState {
   final String text;
 
-  ProgressState(this.text);
+  ShowProgressState({this.text});
 
   @override
   List<Object> get props => [];
