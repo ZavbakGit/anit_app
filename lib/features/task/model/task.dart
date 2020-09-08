@@ -10,8 +10,37 @@ class Task {
   Catalog director;
   Catalog groupTask;
 
-  Task({this.guid, this.number, this.date,
-    this.responsible, this.description,this.partner,this.director});
+  Task copyWith(
+      {String guid,
+      String number,
+      DateTime date,
+      Catalog responsible,
+      String description,
+      Catalog partner,
+      Catalog director,
+      Catalog groupTask}) {
+    return Task(
+      guid: guid ?? this.guid,
+      number: number ?? this.number,
+      date: date ?? this.date,
+      responsible: responsible ?? this.responsible,
+      description: description ?? this.description,
+      partner: partner ?? this.partner,
+      director: director ?? this.director,
+      groupTask: groupTask ?? this.groupTask,
+    );
+  }
+
+  Task({
+    this.guid,
+    this.number,
+    this.date,
+    this.responsible,
+    this.description,
+    this.partner,
+    this.director,
+    this.groupTask,
+  });
 
   Task.fromJson(Map<String, dynamic> json) {
     guid = json['guid'];
@@ -21,9 +50,8 @@ class Task {
         ? new Catalog.fromJson(json['responsible'])
         : null;
 
-    partner = json['partner'] != null
-        ? new Catalog.fromJson(json['partner'])
-        : null;
+    partner =
+        json['partner'] != null ? new Catalog.fromJson(json['partner']) : null;
 
     director = json['director'] != null
         ? new Catalog.fromJson(json['director'])
@@ -62,3 +90,4 @@ class Task {
   }
 }
 
+enum Fields { partner, responsible }

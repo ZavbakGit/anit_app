@@ -10,7 +10,9 @@ import 'package:rxdart/rxdart.dart';
 class SearchCatalogBloc extends Bloc<BaseEvent, BaseState> {
   final SearchCatalogRepository _repository;
 
-  SearchCatalogBloc(AppModel appModel)
+  final String typeCatalog;
+
+  SearchCatalogBloc({AppModel appModel,this.typeCatalog})
       : this._repository = SearchCatalogRepository(appModel.loginData),
         super(InitialState());
 
@@ -37,7 +39,7 @@ class SearchCatalogBloc extends Bloc<BaseEvent, BaseState> {
 
         try {
           final result =
-              await _repository.getListCatalog('Партнеры', casted.text);
+              await _repository.getListCatalog(typeCatalog, casted.text);
 
           yield LoadedState(
               showProgress: false,
@@ -47,25 +49,6 @@ class SearchCatalogBloc extends Bloc<BaseEvent, BaseState> {
         } catch (e) {
           yield LoadingErrorState(message: 'Error loading: ${e.toString()}');
         }
-
-        // if (casted.text.length > 2) {
-        //   yield LoadedState(
-        //     showProgress: true,
-        //     message: 'Идет поиск: ${casted.text}',
-        //   );
-        //
-        //   final result =
-        //       await _repository.getListCatalog('Партнеры', casted.text);
-        //   print(result.elements.length);
-        //   yield LoadedState(
-        //       showProgress: false,
-        //       message: 'найдено: ${result.size}',
-        //       resultSearch: result,
-        //       showResult: true);
-        // } else {
-        //   yield LoadedState(showProgress: false);
-        // }
-
         break;
       default:
         throw Exception('Unknown event');

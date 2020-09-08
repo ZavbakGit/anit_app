@@ -97,33 +97,21 @@ Widget _showTaskForm(Task task) {
             hintText: 'Клиент',
             labelText: 'Клиент',
             typeCatalog: task.partner?.type ?? '',
+            fieldKey: 'partner',
           ),
-          TextField(
-            enabled: false,
-            controller: _partner,
-            decoration: InputDecoration(
-              suffixIcon: Icon(Icons.keyboard_arrow_right),
-              labelText: 'Клиент',
-              hintText: 'Клиент',
-            ),
+          CatalogField(
+            text: task.responsible?.name ?? '',
+            hintText: 'Ответственный',
+            labelText: 'Ответственный',
+            typeCatalog: task.responsible?.type ?? '',
+            fieldKey: 'responsible',
           ),
-          TextField(
-            enabled: false,
-            controller: _responsible,
-            decoration: InputDecoration(
-              suffixIcon: Icon(Icons.keyboard_arrow_right),
-              labelText: 'Ответственный',
-              hintText: 'Ответственный за задачу',
-            ),
-          ),
-          TextField(
-            enabled: false,
-            controller: _director,
-            decoration: InputDecoration(
-              suffixIcon: Icon(Icons.keyboard_arrow_right),
-              labelText: 'Постановщик',
-              hintText: 'Постановщик',
-            ),
+          CatalogField(
+            text: task.director?.name ?? '',
+            labelText: 'Постановщик',
+            hintText: 'Постановщик',
+            typeCatalog: task.director?.type ?? '',
+            fieldKey: 'director',
           ),
           TextField(
             enabled: false,
@@ -145,11 +133,17 @@ class CatalogField extends StatelessWidget {
   final String hintText;
   final String text;
   final String typeCatalog;
+  final String fieldKey;
 
   final TextEditingController controller;
 
   CatalogField(
-      {Key key, this.labelText, this.hintText, this.text, this.typeCatalog})
+      {Key key,
+      this.labelText,
+      this.hintText,
+      this.text,
+      this.typeCatalog,
+      this.fieldKey})
       : this.controller = TextEditingController(),
         super(key: key);
 
@@ -157,10 +151,19 @@ class CatalogField extends StatelessWidget {
   Widget build(BuildContext context) {
     controller.text = text;
 
+    void _onChoosedCatalog() async {
+      final result = await Navigator.pushNamed(context, '/search_catalog',
+          arguments: typeCatalog);
+
+      BlocProvider.of<TaskBloc>(context)
+            .add(ChangedField(fieldKey: fieldKey, value: result));
+
+
+    }
+
     return InkWell(
-      onTap: () async {
-        final result = await Navigator.pushNamed(context, '/search_catalog',
-            arguments: typeCatalog);
+      onTap: () {
+        _onChoosedCatalog();
       },
       child: TextField(
         autofocus: true,

@@ -52,14 +52,6 @@ class _ChooseRadioButtonDialogState extends State<ChooseRadioButtonDialog> {
               onPressed: () {
                 Navigator.of(context).pop();
               }),
-//          FlatButton(
-//              child: Text(
-//                'Ok',
-//                style: TextStyle(fontWeight: FontWeight.bold),
-//              ),
-//              onPressed: () {
-//                Navigator.of(context).pop(currentValue);
-//              })
         ],
       ),
     );

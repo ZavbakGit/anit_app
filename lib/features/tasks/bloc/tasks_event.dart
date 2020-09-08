@@ -12,4 +12,3 @@ class InitialEvent extends TasksEvent {
   @override
   List<Object> get props => [];
 }
-
