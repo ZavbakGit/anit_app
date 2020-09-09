@@ -12,11 +12,24 @@ class SearchCatalogRepository {
 
   Future<ResponseSearch> getListCatalog(String type,String searchText) async {
 
-    final url = 'catalog?catalog=$type&count=30&offset=0&search=$searchText';
+    final url = 'catalog?catalog=$type&count=30&offset=0&search=$searchText&all=${false}';
 
     final Response response = await _apiProvider.request(uri: url);
     final bodyUtf8 = utf8.decode(response.bodyBytes);
 
     return ResponseSearch.fromJson(json.decode(bodyUtf8));
   }
+
+  Future<ResponseSearch> getListCatalogAll(String type) async {
+
+    final search = "";
+
+    final url = 'catalog?catalog=$type&count=30&offset=0&search=$search';
+
+    final Response response = await _apiProvider.request(uri: url);
+    final bodyUtf8 = utf8.decode(response.bodyBytes);
+
+    return ResponseSearch.fromJson(json.decode(bodyUtf8));
+  }
+
 }

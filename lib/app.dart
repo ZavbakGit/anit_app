@@ -32,7 +32,7 @@ class App extends StatelessWidget {
             ),
         '/tasks': (context) => TasksStartFeature(),
         '/task': (context) => TaskStartFeature(),
-        '/search_catalog':(context) => SearchCatalogStartFeature()
+        //'/search_catalog':(context) => SearchCatalogStartFeature()
       },
       initialRoute: '/',
     );

@@ -1,3 +1,4 @@
+import 'package:anit_app/features/searchctalog/view/catalog_page.dart';
 import 'package:anit_app/features/searchctalog/view/search_catalog_page.dart';
 import 'package:anit_app/model/AppModel.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,19 +8,23 @@ import 'package:provider/provider.dart';
 import 'bloc/search_catalog_bloc.dart';
 
 class SearchCatalogStartFeature extends StatelessWidget {
+  final String type;
+  final bool allElements;
+
+  const SearchCatalogStartFeature({Key key, this.type, this.allElements})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final appModel = Provider.of<AppModel>(context);
 
-    RouteSettings settings = ModalRoute.of(context).settings;
-    final argument = settings.arguments;
-
     return BlocProvider(
       create: (context) => SearchCatalogBloc(
         appModel: appModel,
-        typeCatalog: argument,
+        typeCatalog: type,
+        allElements: allElements
       ),
-      child: SearchCatalogPage(),
+      child: allElements?CatalogPage():SearchCatalogPage(),
     );
   }
 }

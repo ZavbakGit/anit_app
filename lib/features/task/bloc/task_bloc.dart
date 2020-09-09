@@ -42,14 +42,20 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
         switch (casted.fieldKey) {
           case 'partner':
-            task.partner = casted.value;
-            yield ShowTaskState(task.copyWith(partner: casted.value));
+            task = task.copyWith(partner: casted.value);
+            yield ShowTaskState(task);
             break;
           case 'responsible':
-            yield ShowTaskState(task.copyWith(responsible: casted.value));
+            task = task.copyWith(responsible: casted.value);
+            yield ShowTaskState(task);
             break;
           case 'director':
-            yield ShowTaskState(task.copyWith(director: casted.value));
+            task = task.copyWith(director: casted.value);
+            yield ShowTaskState(task);
+            break;
+          case 'groupTask':
+            task = task.copyWith(groupTask: casted.value);
+            yield ShowTaskState(task);
             break;
           default:
             break;

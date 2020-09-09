@@ -1,4 +1,5 @@
 import 'package:anit_app/common/view/progress_widget.dart';
+import 'package:anit_app/features/searchctalog/search_catalog_start.dart';
 import 'package:anit_app/features/task/bloc/task_bloc.dart';
 import 'package:anit_app/features/task/bloc/task_event.dart';
 import 'package:anit_app/features/task/bloc/task_state.dart';
@@ -113,14 +114,13 @@ Widget _showTaskForm(Task task) {
             typeCatalog: task.director?.type ?? '',
             fieldKey: 'director',
           ),
-          TextField(
-            enabled: false,
-            controller: _groupTask,
-            decoration: InputDecoration(
-              suffixIcon: Icon(Icons.keyboard_arrow_right),
-              labelText: 'Группа',
-              hintText: 'Группа',
-            ),
+          CatalogField(
+            text: task.groupTask?.name ?? '',
+            labelText: 'Группа',
+            hintText: 'Группа',
+            typeCatalog: task.groupTask?.type ?? '',
+            fieldKey: 'groupTask',
+            allElements: true,
           ),
         ],
       ),
@@ -134,6 +134,7 @@ class CatalogField extends StatelessWidget {
   final String text;
   final String typeCatalog;
   final String fieldKey;
+  final bool allElements;
 
   final TextEditingController controller;
 
@@ -143,6 +144,7 @@ class CatalogField extends StatelessWidget {
       this.hintText,
       this.text,
       this.typeCatalog,
+      this.allElements = false,
       this.fieldKey})
       : this.controller = TextEditingController(),
         super(key: key);
@@ -152,12 +154,22 @@ class CatalogField extends StatelessWidget {
     controller.text = text;
 
     void _onChoosedCatalog() async {
-      final result = await Navigator.pushNamed(context, '/search_catalog',
-          arguments: typeCatalog);
+      // final result = await Navigator.pushNamed(context, '/search_catalog',
+      //     arguments: typeCatalog);
 
-      BlocProvider.of<TaskBloc>(context)
+      final result = await Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => SearchCatalogStartFeature(
+                    type: typeCatalog,
+                    allElements: allElements,
+                  )));
+
+
+      if (result != null){
+        BlocProvider.of<TaskBloc>(context)
             .add(ChangedField(fieldKey: fieldKey, value: result));
-
+      }
 
     }
 

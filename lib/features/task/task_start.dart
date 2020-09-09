@@ -22,10 +22,12 @@ class TaskStartFeature extends StatelessWidget {
         child: TaskPage(),
       );
     } else if (argument is Catalog) {
-
       final task = Task()
         ..date = DateTime.now()
-        ..groupTask = argument;
+        ..groupTask = argument
+        ..director = Catalog(type: 'Пользователи')
+        ..responsible = Catalog(type: 'Пользователи')
+        ..partner = Catalog(type: 'Партнеры');
 
       return BlocProvider(
         create: (context) => TaskBloc.newTask(appModel, task),

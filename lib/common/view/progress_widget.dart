@@ -9,12 +9,14 @@ class ProgressWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        CircularProgressIndicator(
-        ),
-        Text(message??"")
-      ],
+    return Center(
+      child: Column(
+        children: <Widget>[
+          CircularProgressIndicator(
+          ),
+          Text(message??"")
+        ],
+      ),
     );
   }
 }
